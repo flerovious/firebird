@@ -41,11 +41,23 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>your camera usage description here</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>your microphone usage description here</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>your location when in use description here</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>your location always in use description here</string>
 </dict>
 </plist>
