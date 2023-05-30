@@ -31,6 +31,7 @@ class _MyAppState extends State<MyApp> {
   LocationData? _locationData;
   List<double> _accelerometerValues = <double>[];
   List<double> _gyroscopeValues = <double>[];
+  List<double> _magnetometerValues = <double>[];
 
   @override
   void initState() {
@@ -89,15 +90,24 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _startListeningToSensors() {
+    // Listen to accelerometer events
     accelerometerEvents.listen((AccelerometerEvent event) {
       setState(() {
         _accelerometerValues = <double>[event.x, event.y, event.z];
       });
     });
 
+    // Listen to gyroscope events
     gyroscopeEvents.listen((GyroscopeEvent event) {
       setState(() {
         _gyroscopeValues = <double>[event.x, event.y, event.z];
+      });
+    });
+
+    // Listen to magnetometer events
+    magnetometerEvents.listen((MagnetometerEvent event) {
+      setState(() {
+        _magnetometerValues = <double>[event.x, event.y, event.z];
       });
     });
   }
@@ -123,6 +133,7 @@ class _MyAppState extends State<MyApp> {
       print('Longitude: ${_locationData?.longitude}');
       print('Accelerometer Values: $_accelerometerValues');
       print('Gyroscope Values: $_gyroscopeValues');
+      print('Magnetometer Values: $_magnetometerValues');
     }
   }
 
