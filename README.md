@@ -1,4 +1,4 @@
-# stanfire
+# FireBird
 
 A new Flutter project.
 
