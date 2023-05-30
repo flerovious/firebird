@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -16,16 +17,29 @@ Future<void> main() async {
   runApp(MyApp(camera: cameras.first));
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   final CameraDescription camera;
 
   const MyApp({Key? key, required this.camera}) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: CameraScreen(camera: camera),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class CameraScreen extends StatefulWidget {
+  final CameraDescription camera;
+
+  const CameraScreen({Key? key, required this.camera}) : super(key: key);
+
+  @override
+  _CameraScreenState createState() => _CameraScreenState();
+}
+
+class _CameraScreenState extends State<CameraScreen> {
   CameraController? _controller;
   LocationData? _locationData;
   List<double> _accelerometerValues = <double>[];
@@ -120,6 +134,7 @@ class _MyAppState extends State<MyApp> {
       try {
         final file = await _controller!.takePicture();
         print('Image captured: ${file.path}');
+        _navigateToPhotoScreen(file.path);
       } catch (e) {
         print('Error capturing image: $e');
         return;
@@ -134,6 +149,15 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  void _navigateToPhotoScreen(String imagePath) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PhotoScreen(imagePath: imagePath),
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _controller?.dispose();
@@ -146,31 +170,95 @@ class _MyAppState extends State<MyApp> {
       return Container();
     }
 
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Stanfire'),
-        ),
-        body: Stack(
-          children: [
-            Center(
-              child: CameraPreview(_controller!),
-            ),
-            Center(
-              child: Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.red, width: 2),
-                ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('FireBird'),
+      ),
+      body: Stack(
+        children: [
+          Center(
+            child: CameraPreview(_controller!),
+          ),
+          Center(
+            child: Container(
+              width: 150,
+              height: 150,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.red, width: 2),
               ),
             ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _captureImage,
-          child: const Icon(Icons.camera_alt),
-        ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _captureImage,
+        child: const Icon(Icons.camera_alt),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+}
+
+class PhotoScreen extends StatefulWidget {
+  final String imagePath;
+
+  const PhotoScreen({Key? key, required this.imagePath}) : super(key: key);
+
+  @override
+  _PhotoScreenState createState() => _PhotoScreenState();
+}
+
+class _PhotoScreenState extends State<PhotoScreen> {
+  String description = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Photo Preview'),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: Image.file(File(widget.imagePath)),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Add description...',
+                        border: InputBorder.none,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          description = value;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16.0),
+                FloatingActionButton(
+                  onPressed: () {
+                    print('Description: $description');
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.send),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
