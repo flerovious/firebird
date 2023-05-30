@@ -149,20 +149,27 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Camera App'),
+          title: const Text('Stanfire'),
         ),
-        body: Column(
+        body: Stack(
           children: [
-            Expanded(
-              child: Center(
-                child: CameraPreview(_controller!),
+            Center(
+              child: CameraPreview(_controller!),
+            ),
+            Center(
+              child: Container(
+                width: 150,
+                height: 150,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.red, width: 2),
+                ),
               ),
             ),
-            ElevatedButton(
-              onPressed: _captureImage,
-              child: const Text('Capture Image'),
-            ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _captureImage,
+          child: const Icon(Icons.camera_alt),
         ),
       ),
     );
