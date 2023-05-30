@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
@@ -118,16 +117,14 @@ class _MyAppState extends State<MyApp> {
       final String formattedDateTime =
           '${now.year}-${now.month}-${now.day}_${now.hour}-${now.minute}-${now.second}';
 
-      final path = '${Directory.systemTemp.path}/$formattedDateTime.png';
-
       try {
-        await _controller!.takePicture();
+        final file = await _controller!.takePicture();
+        print('Image captured: ${file.path}');
       } catch (e) {
         print('Error capturing image: $e');
         return;
       }
 
-      print('Image captured: $path');
       print('Date and Time: $formattedDateTime');
       print('Latitude: ${_locationData?.latitude}');
       print('Longitude: ${_locationData?.longitude}');
