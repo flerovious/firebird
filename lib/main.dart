@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'dart:async';
 
 import 'package:camera/camera.dart';
@@ -20,6 +22,8 @@ class MyApp extends StatelessWidget {
   final CameraDescription camera;
 
   const MyApp({Key? key, required this.camera}) : super(key: key);
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   @override
   Widget build(BuildContext context) {
