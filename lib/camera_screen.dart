@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
-import 'photo_screen.dart';
+import 'report_screen.dart';
 
 class CameraScreen extends StatefulWidget {
   final CameraDescription camera;
@@ -144,9 +144,21 @@ class _CameraScreenState extends State<CameraScreen> {
       appBar: AppBar(
         title: const Text('FireBird'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 60),
-        child: CameraPreview(_controller!),
+      body: Stack(
+        children: [
+          Center(
+            child: CameraPreview(_controller!),
+          ),
+          Center(
+            child: Container(
+              width: 150,
+              height: 150,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.red, width: 2),
+              ),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _captureImage,
