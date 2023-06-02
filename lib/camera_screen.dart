@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'photo_screen.dart';
 
@@ -105,6 +106,31 @@ class _CameraScreenState extends State<CameraScreen> {
       try {
         final file = await _controller!.takePicture();
         print('Image captured: ${file.path}');
+
+        // Create a map of the image metadata
+        final imageMetadata = <String, dynamic>{
+          'imagePath': file.path,
+          'locationData': _locationData != null
+              ? {
+            'latitude': _locationData!.latitude,
+            'longitude': _locationData!.longitude,
+            'accuracy': _locationData!.accuracy,
+            'altitude': _locationData!.altitude,
+            'speed': _locationData!.speed,
+            // Add more location data as needed
+          }
+              : null,
+          'accelerometerValues': _accelerometerValues,
+          'gyroscopeValues': _gyroscopeValues,
+          'magnetometerValues': _magnetometerValues,
+        };
+
+        // Get a reference to the Firestore collection where the metadata will be stored
+        CollectionReference images = FirebaseFirestore.instance.collection('1');
+
+        // Add the metadata to the collection
+        images.add(imageMetadata);
+
         _navigateToPhotoScreen(file.path);
       } catch (e) {
         print('Error capturing image: $e');

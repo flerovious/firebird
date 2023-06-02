@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'camera_screen.dart';
 
 Future<void> main() async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   WidgetsFlutterBinding.ensureInitialized();
   // Ensure that there's at least one camera available
   final cameras = await availableCameras();
@@ -19,11 +20,10 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+
   final CameraDescription camera;
 
   const MyApp({Key? key, required this.camera}) : super(key: key);
-
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   @override
   Widget build(BuildContext context) {

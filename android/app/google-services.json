@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "868296289675",
+    "project_id": "wildfire-hack",
+    "storage_bucket": "wildfire-hack.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868296289675:android:f7b86dd06505713bd5138e",
+        "android_client_info": {
+          "package_name": "com.example.firebird"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo-jqx073aoQgmOC4cEM03_j8ku83QzKc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868296289675:android:9287b769d8f1ed1dd5138e",
+        "android_client_info": {
+          "package_name": "com.example.stanfire"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo-jqx073aoQgmOC4cEM03_j8ku83QzKc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

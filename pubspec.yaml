@@ -39,9 +39,11 @@ dependencies:
   sensors_plus: ^3.0.1
   location: ^4.4.0
 
+
   # Most updated ^2.13.1 - but this currently has an ongoing issue
   # https://github.com/firebase/flutterfire/issues/11013
-  firebase_core: ^2.13.1
+  firebase_core:  ^1.5.0
+  cloud_firestore: ^2.5.0
 
 dev_dependencies:
   flutter_test:
