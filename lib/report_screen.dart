@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 
@@ -76,6 +77,22 @@ class _PhotoScreenState extends State<PhotoScreen> {
                     print('Gyroscope Values: ${widget.gyroscopeValues}');
                     print('Magnetometer Values: ${widget.magnetometerValues}');
                     print('Created date: $lastModified');
+
+                    // Create a map of the image metadata
+                    final imageMetadata = <String, dynamic>{
+                      'datetime': lastModified,
+                      'latitude': widget.locationData?.latitude,
+                      'longitude': widget.locationData?.longitude,
+                      'gyroscope': widget.gyroscopeValues,
+                    };
+
+                    // Get a reference to the Firestore collection where the metadata will be stored
+                    CollectionReference images =
+                        FirebaseFirestore.instance.collection('1');
+
+                    // Add the metadata to the collection
+                    images.add(imageMetadata);
+
                     Navigator.pop(context);
                   },
                   child: const Icon(Icons.send),
